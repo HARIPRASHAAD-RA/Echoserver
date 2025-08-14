@@ -58,6 +58,41 @@ server_address =('keerthi',2323)
 httpd = HTTPServer(server_address,MyServer)
 httpd.serve_forever()
 ```
+
+## server
+```
+import socket
+HOST = '127.0.0.1' 
+PORT = 65432 
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.bind((HOST, PORT))
+    s.listen()
+    print(f"Server started. Listening on {HOST}:{PORT}...")
+    conn, addr = s.accept()
+    with conn:
+        print(f"Connected by {addr}")
+        while True:
+            data = conn.recv(1024)
+            if not data:
+                break
+                conn.sendall(data)
+```
+
+## client
+```
+import socket
+HOST = '127.0.0.1' 
+PORT = 65432
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.connect((HOST, PORT))
+    while True:
+        message = input("Enter message (or 'exit' to quit): ")
+        if message.lower() == 'exit':
+            break
+        s.sendall(message.encode())
+        data = s.recv(1024)
+        print(f"Echo from server: {data.decode()}")
+```
 ##  Architecture Diagram
 
 ```bash
@@ -86,9 +121,10 @@ httpd.serve_forever()
 
 
 ## OUTPUT:
-### CLIENT OUTPUT:
+<img width="1918" height="1020" alt="image" src="https://github.com/user-attachments/assets/2c978680-fb9c-42d4-b7de-6cd8a42dd1f8" />
 
-### SERVER OUTPUT:
+
+
 
 ## RESULT:
 The program is executed succesfully
